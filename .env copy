@@ -1,0 +1,12 @@
+JWT_SECRET=your_jwt_secret_here 
+SERVER_PORT=8080 
+DB_CONN_STR=
+host=localhost 
+port=5432 
+user=postgres 
+password=your_password 
+dbname=auth_db
+sslmode=disable
+
+DATABASE_URL="postgresql://postgres.alzfbfwcjjsmdyepagge:@Deikyt2002.@aws-0-us-east-2.pooler.supabase.com:6543/postgres"
+

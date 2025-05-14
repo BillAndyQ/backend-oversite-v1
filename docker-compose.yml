@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  orden-trabajo-service:
+    build:
+      context: ./orden-trabajo-service
+    labels:
+      - "traefik.http.routers.orden-trabajo-service.rule=Host(`localhost`) && PathPrefix(`/ot-service`)"
+      - "traefik.http.services.orden-trabajo-service.loadbalancer.server.port=8081"
+    networks:
+      - backend
+
+  user-service:
+    build:
+      context: ./user-service
+    labels:
+      - "traefik.http.routers.user.rule=Host(`localhost`) && PathPrefix(`/user`)"
+      - "traefik.http.services.user.loadbalancer.server.port=8080"
+    networks:
+      - backend
+
+  traefik:
+    image: traefik:v2.6
+    command:
+      - "--api.insecure=true"  # Habilita la API de Traefik para ver la interfaz web
+      - "--providers.docker=true"  # Habilita la integración con Docker
+      - "--entryPoints.web.address=:80"  # Define el punto de entrada para el tráfico HTTP
+      - "--entryPoints.websecure.address=:443"  # Define el punto de entrada para el tráfico HTTPS
+      - "--log.level=DEBUG"
+    ports:
+      - "80:80"   # Puerto HTTP
+      - "443:443" # Puerto HTTPS
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - backend
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"  # API S3
+      - "9001:9001"  # Consola web
+    environment:
+      MINIO_ROOT_USER: admin
+      
+      MINIO_ROOT_PASSWORD: admin123
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  minio_data:
