@@ -1,11 +1,13 @@
 package domain
 
+import "orden-trabajo-service/utils"
+
 type OrdenTrabajoEquipo struct {
-	ID                uint   `json:"id" gorm:"primaryKey"`
-	OrdenTrabajoID    string `json:"orden_trabajo_id"`
-	OrdenServiceID    string `json:"orden_servicio_id"`
-	Empresa           string `json:"empresa"`
+	ID                int    `json:"id" gorm:"primaryKey"`
+	NOrdenTrabajo     string `json:"n_orden_trabajo"`
+	NOrdenService     string `json:"n_orden_servicio"`
 	EmpresaMatriz     string `json:"empresa_matriz"`
+	EmpresaSocia      string `json:"empresa_socia"`
 	Ruc               string `json:"ruc"`
 	FechaServicio     string `json:"fecha_servicio"`
 	Certificadora     string `json:"certificadora"`
@@ -24,4 +26,18 @@ type OrdenTrabajoEquipo struct {
 	Estado            string `json:"estado"`
 	FechaCreacion     string `json:"fecha_creacion"`
 	FechaModificacion string `json:"fecha_modificacion"`
+}
+
+type OTEqAdminDTO struct {
+	ID            int                      `json:"id" gorm:"primaryKey"`
+	NOrdenTrabajo string                   `json:"n_orden_trabajo"`
+	NOrdenService string                   `json:"n_orden_servicio"`
+	EmpresaMatriz string                   `json:"empresa_matriz"`
+	EmpresaSocia  string                   `json:"empresa_socia"`
+	Ruc           string                   `json:"ruc"`
+	FechaServicio utils.FechaPersonalizada `json:"fecha_servicio"`
+	Certificadora string                   `json:"certificadora"`
+	TipoUnidad    string                   `json:"tipo_unidad"`
+	Placa         string                   `json:"placa"`
+	Area          string                   `json:"area"`
 }

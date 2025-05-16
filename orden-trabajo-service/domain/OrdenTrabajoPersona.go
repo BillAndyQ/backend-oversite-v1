@@ -2,7 +2,7 @@ package domain
 
 type OrdenTrabajoPersona struct {
 	ID                     uint   `json:"id" gorm:"primaryKey"`
-	OrdenTrabajoID         string `json:"orden_trabajo_id"`
+	NOrdenTrabajo          string `json:"n_orden_trabajo"`
 	Empresa                string `json:"empresa"`
 	EmpresaMatriz          string `json:"empresa_matriz"`
 	Ruc                    string `json:"ruc"`
